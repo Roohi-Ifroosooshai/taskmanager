@@ -1,5 +1,7 @@
-package com.project.taskmanager;
+package com.project.taskmanager.controller;
 
+import com.project.taskmanager.entity.Task;
+import com.project.taskmanager.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
