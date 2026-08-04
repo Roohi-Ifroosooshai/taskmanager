@@ -1,5 +1,6 @@
 package com.project.taskmanager.exception;
 
+import com.project.taskmanager.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,9 +9,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(TaskNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleTaskNotFound(
+    public ErrorResponse handleTaskNotFound(
             TaskNotFoundException ex) {
 
-        return ex.getMessage();
+        return new ErrorResponse(
+                404,
+                ex.getMessage());
     }
 }

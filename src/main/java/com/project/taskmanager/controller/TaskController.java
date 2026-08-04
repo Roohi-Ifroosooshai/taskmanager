@@ -4,6 +4,7 @@ import com.project.taskmanager.entity.Task;
 import com.project.taskmanager.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import com.project.taskmanager.dto.TaskRequest;
 
 import java.util.List;
 
@@ -28,13 +29,23 @@ public class TaskController {
     }
 
     @PostMapping
-    public Task createTask(@Valid @RequestBody Task task) {
+    public Task createTask(
+            @Valid @RequestBody TaskRequest request) {
+
+        Task task = new Task();
+        task.setTitle(request.getTitle());
+
         return service.createTask(task);
     }
 
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Long id,
-                           @Valid @RequestBody Task task) {
+    public Task updateTask(
+            @PathVariable Long id,
+            @Valid @RequestBody TaskRequest request) {
+
+        Task task = new Task();
+        task.setTitle(request.getTitle());
+
         return service.updateTask(id, task);
     }
 
