@@ -1,49 +1,17 @@
 package com.project.taskmanager.service;
 
 import com.project.taskmanager.entity.Task;
-import com.project.taskmanager.exception.TaskNotFoundException;
-import com.project.taskmanager.repository.TaskRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Service
-public class TaskService {
+public interface TaskService {
 
-    private final TaskRepository repository;
+    List<Task> getAllTasks();
 
-    public TaskService(TaskRepository repository) {
-        this.repository = repository;
-    }
+    Task getTaskById(Long id);
 
-    public List<Task> getAllTasks() {
-        return repository.findAll();
-    }
+    Task createTask(Task task);
 
-    public Task getTaskById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new TaskNotFoundException("Task not found"));
-    }
+    Task updateTask(Long id, Task task);
 
-    public Task createTask(Task task) {
-        return repository.save(task);
-    }
-
-    public Task updateTask(Long id, Task updatedTask) {
-        Task task = repository.findById(id)
-                .orElseThrow(() -> new TaskNotFoundException("Task not found"));
-
-        task.setTitle(updatedTask.getTitle());
-
-        return repository.save(task);
-    }
-
-    public void deleteTask(Long id) {
-
-        Task task = repository.findById(id)
-                .orElseThrow(() ->
-                        new TaskNotFoundException("Task not found"));
-
-        repository.delete(task);
-    }
+    void deleteTask(Long id);
 }
