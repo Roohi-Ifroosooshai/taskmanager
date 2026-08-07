@@ -37,15 +37,15 @@ public class TaskController {
 
     @Operation(summary = "Create a new task")
     @PostMapping
-    public Task createTask(@Valid @RequestBody Task task) {
-        return service.createTask(task);
+    public Task createTask(@Valid @RequestBody TaskRequest request) {
+        return service.createTask(request);
     }
 
     @Operation(summary = "Update task")
     @PutMapping("/{id}")
     public Task updateTask(@PathVariable Long id,
-                           @Valid @RequestBody Task task) {
-        return service.updateTask(id, task);
+                           @Valid @RequestBody TaskRequest request) {
+        return service.updateTask(id, request);
     }
 
     @Operation(summary = "Delete task")

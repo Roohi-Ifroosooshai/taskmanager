@@ -1,5 +1,6 @@
 package com.project.taskmanager.service;
 
+import com.project.taskmanager.dto.TaskRequest;
 import com.project.taskmanager.entity.Task;
 import java.util.List;
 
@@ -9,9 +10,9 @@ public interface TaskService {
 
     Task getTaskById(Long id);
 
-    Task createTask(Task task);
+    Task createTask(TaskRequest request);;
 
-    Task updateTask(Long id, Task task);
+    Task updateTask(Long id, TaskRequest request);
 
     void deleteTask(Long id);
 }

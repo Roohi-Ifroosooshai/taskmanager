@@ -1,5 +1,6 @@
 package com.project.taskmanager.service;
 
+import com.project.taskmanager.dto.TaskRequest;
 import com.project.taskmanager.entity.Task;
 import com.project.taskmanager.exception.TaskNotFoundException;
 import com.project.taskmanager.repository.TaskRepository;
@@ -29,12 +30,16 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task createTask(Task task) {
+    public Task createTask(TaskRequest request) {
+
+        Task task = new Task();
+        task.setTitle(request.getTitle());
+
         return repository.save(task);
     }
 
     @Override
-    public Task updateTask(Long id, Task updatedTask) {
+    public Task updateTask(Long id, TaskRequest updatedTask) {
 
         Task task = repository.findById(id)
                 .orElseThrow(() ->
