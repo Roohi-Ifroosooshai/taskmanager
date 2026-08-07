@@ -6,10 +6,15 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import com.project.taskmanager.dto.TaskRequest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/tasks")
+@Tag(name = "Task API",
+        description = "CRUD Operations for Tasks")
 public class TaskController {
 
     private final TaskService service;
@@ -18,37 +23,32 @@ public class TaskController {
         this.service = service;
     }
 
+    @Operation(summary = "Get all tasks")
     @GetMapping
     public List<Task> getTasks() {
         return service.getAllTasks();
     }
 
+    @Operation(summary = "Get task by ID")
     @GetMapping("/{id}")
     public Task getTaskById(@PathVariable Long id) {
         return service.getTaskById(id);
     }
 
+    @Operation(summary = "Create a new task")
     @PostMapping
-    public Task createTask(
-            @Valid @RequestBody TaskRequest request) {
-
-        Task task = new Task();
-        task.setTitle(request.getTitle());
-
+    public Task createTask(@Valid @RequestBody Task task) {
         return service.createTask(task);
     }
 
+    @Operation(summary = "Update task")
     @PutMapping("/{id}")
-    public Task updateTask(
-            @PathVariable Long id,
-            @Valid @RequestBody TaskRequest request) {
-
-        Task task = new Task();
-        task.setTitle(request.getTitle());
-
+    public Task updateTask(@PathVariable Long id,
+                           @Valid @RequestBody Task task) {
         return service.updateTask(id, task);
     }
 
+    @Operation(summary = "Delete task")
     @DeleteMapping("/{id}")
     public String deleteTask(@PathVariable Long id) {
         service.deleteTask(id);
