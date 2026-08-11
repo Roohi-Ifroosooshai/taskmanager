@@ -10,9 +10,9 @@ public interface TaskService {
 
     Task getTaskById(Long id);
 
-    Task createTask(TaskRequest request);;
+    Task createTask(TaskRequest taskRequest);
 
-    Task updateTask(Long id, TaskRequest request);
+    Task updateTask(Long id, TaskRequest taskRequest);
 
     void deleteTask(Long id);
 }
