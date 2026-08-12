@@ -9,6 +9,9 @@ import com.project.taskmanager.dto.TaskRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
 
 @RestController
@@ -27,6 +30,22 @@ public class TaskController {
     @GetMapping
     public List<Task> getTasks() {
         return service.getAllTasks();
+    }
+
+    @Operation(summary = "Get tasks with pagination and sorting")
+    @GetMapping("/paged")
+    public Page<Task> getTasksPaged(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+        return service.getTasks(
+                page,
+                size,
+                sortBy,
+                direction
+        );
     }
 
     @Operation(summary = "Get task by ID")

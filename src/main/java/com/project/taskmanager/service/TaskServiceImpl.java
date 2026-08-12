@@ -6,6 +6,11 @@ import com.project.taskmanager.exception.TaskNotFoundException;
 import com.project.taskmanager.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import java.util.List;
 
 @Service
@@ -27,6 +32,27 @@ public class TaskServiceImpl implements TaskService {
         return repository.findById(id)
                 .orElseThrow(() ->
                         new TaskNotFoundException("Task not found with id: " + id));
+    }
+
+    @Override
+    public Page<Task> getTasks(
+            int page,
+            int size,
+            String sortBy,
+            String direction) {
+
+        Sort.Direction sortDirection =
+                direction.equalsIgnoreCase("desc")
+                        ? Sort.Direction.DESC
+                        : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                Sort.by(sortDirection, sortBy)
+        );
+
+        return repository.findAll(pageable);
     }
 
     @Override
