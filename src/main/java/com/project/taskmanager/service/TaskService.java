@@ -14,13 +14,25 @@ public interface TaskService {
             int page,
             int size,
             String sortBy,
-            String direction);
+            String direction
+    );
+
+    Page<Task> searchTasks(
+            String title,
+            int page,
+            int size,
+            String sortBy,
+            String direction
+    );
 
     Task getTaskById(Long id);
 
-    Task createTask(TaskRequest request);
+    Task createTask(TaskRequest taskRequest);
 
-    Task updateTask(Long id, TaskRequest request);
+    Task updateTask(
+            Long id,
+            TaskRequest taskRequest
+    );
 
     void deleteTask(Long id);
 }

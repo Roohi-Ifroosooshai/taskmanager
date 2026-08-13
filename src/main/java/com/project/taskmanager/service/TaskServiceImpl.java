@@ -23,6 +23,32 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public Page<Task> searchTasks(
+            String title,
+            int page,
+            int size,
+            String sortBy,
+            String direction
+    ) {
+
+        Sort.Direction sortDirection =
+                direction.equalsIgnoreCase("desc")
+                        ? Sort.Direction.DESC
+                        : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                Sort.by(sortDirection, sortBy)
+        );
+
+        return repository.findByTitleContainingIgnoreCase(
+                title,
+                pageable
+        );
+    }
+
+    @Override
     public List<Task> getAllTasks() {
         return repository.findAll();
     }

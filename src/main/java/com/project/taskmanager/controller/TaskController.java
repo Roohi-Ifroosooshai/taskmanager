@@ -48,6 +48,25 @@ public class TaskController {
         );
     }
 
+    @Operation(summary = "Search tasks by title")
+    @GetMapping("/search")
+    public Page<Task> searchTasks(
+            @RequestParam String title,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction
+    ) {
+
+        return service.searchTasks(
+                title,
+                page,
+                size,
+                sortBy,
+                direction
+        );
+    }
+
     @Operation(summary = "Get task by ID")
     @GetMapping("/{id}")
     public Task getTaskById(@PathVariable Long id) {
