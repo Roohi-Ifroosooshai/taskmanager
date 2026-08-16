@@ -4,18 +4,21 @@ import com.project.taskmanager.dto.TaskRequest;
 import com.project.taskmanager.entity.Task;
 import com.project.taskmanager.exception.TaskNotFoundException;
 import com.project.taskmanager.repository.TaskRepository;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class TaskServiceImplTest {
+class TaskServiceImplTest {
 
     @Mock
     private TaskRepository taskRepository;
@@ -79,12 +82,14 @@ public class TaskServiceImplTest {
         task.setTitle("Spring Boot");
 
         when(taskRepository.findById(1L))
-                .thenReturn(java.util.Optional.of(task));
+                .thenReturn(Optional.of(task));
 
         Task result = taskService.getTaskById(1L);
 
-        assertEquals("Spring Boot",
-                result.getTitle());
+        assertEquals(
+                "Spring Boot",
+                result.getTitle()
+        );
 
         verify(taskRepository, times(1))
                 .findById(1L);
@@ -94,7 +99,7 @@ public class TaskServiceImplTest {
     void shouldThrowExceptionWhenTaskNotFound() {
 
         when(taskRepository.findById(99L))
-                .thenReturn(java.util.Optional.empty());
+                .thenReturn(Optional.empty());
 
         assertThrows(
                 TaskNotFoundException.class,
@@ -109,14 +114,11 @@ public class TaskServiceImplTest {
         task.setId(1L);
 
         when(taskRepository.findById(1L))
-                .thenReturn(java.util.Optional.of(task));
+                .thenReturn(Optional.of(task));
 
         taskService.deleteTask(1L);
 
         verify(taskRepository, times(1))
                 .delete(task);
     }
-
-
-
 }
